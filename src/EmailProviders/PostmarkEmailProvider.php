@@ -19,9 +19,11 @@
 namespace Rhubarb\PostmarkEmail\EmailProviders;
 
 use Postmark\Models\PostmarkAttachment;
+use Postmark\Models\PostmarkException;
 use Postmark\PostmarkClient;
-use Rhubarb\Crown\Email\EmailProvider;
 use Rhubarb\Crown\Email\Email;
+use Rhubarb\Crown\Email\EmailProvider;
+use Rhubarb\Crown\Exceptions\EmailException;
 use Rhubarb\Crown\Exceptions\SettingMissingException;
 use Rhubarb\PostmarkEmail\Settings\PostmarkSettings;
 
@@ -32,33 +34,36 @@ class PostmarkEmailProvider extends EmailProvider
         $settings = new PostmarkSettings();
         $token = $settings->ServerToken;
 
-        if ( $token === null )
-        {
-            throw new SettingMissingException( "Postmark", "ServerToken" );
+        if ($token === null) {
+            throw new SettingMissingException("Postmark", "ServerToken");
         }
 
         $postMarkAttachments = [];
         $emailAttachments = $email->getAttachments();
 
-        foreach( $emailAttachments as $emailAttachment ){
-            $postMarkAttachment = PostmarkAttachment::fromFile( $emailAttachment->path, $emailAttachment->name );
+        foreach ($emailAttachments as $emailAttachment) {
+            $postMarkAttachment = PostmarkAttachment::fromFile($emailAttachment->path, $emailAttachment->name);
             $postMarkAttachments[] = $postMarkAttachment;
         }
 
-        $client = new PostmarkClient($token);
-        $client->sendEmail(
-            (string)$email->getSender(),
-            $email->getRecipientList(),
-            $email->getSubject(),
-            $email->getHtml(),
-            $email->getText(),
-            null,
-            false,
-            (string)$email->getSender(),
-            null,
-            null,
-            null,
-            $postMarkAttachments
-        );
+        try {
+            $client = new PostmarkClient($token);
+            $client->sendEmail(
+                (string)$email->getSender(),
+                $email->getRecipientList(),
+                $email->getSubject(),
+                $email->getHtml(),
+                $email->getText(),
+                null,
+                false,
+                (string)$email->getSender(),
+                null,
+                null,
+                null,
+                $postMarkAttachments
+            );
+        } catch (PostmarkException $er) {
+            throw new EmailException($er->getMessage(), $er);
+        }
     }
 }
