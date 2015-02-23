@@ -10,14 +10,8 @@
       "Rhubarb\\PostmarkEmail\\Tests\\": "tests/"
     }
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/acuthbert/rhubarb"
-    }
-  ],
   "require": {
-    "rhubarbphp/rhubarb": "dev-crown",
+    "rhubarbphp/rhubarb": "*",
     "wildbit/postmark-php": "1.*"
   },
   "require-dev": {
