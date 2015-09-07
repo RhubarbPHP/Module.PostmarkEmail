@@ -35,7 +35,7 @@ class PostmarkEmailProvider extends EmailProvider
         $token = $settings->ServerToken;
 
         if ($token === null) {
-            throw new SettingMissingException("Postmark", "ServerToken");
+            throw new SettingMissingException(PostmarkSettings::class, "ServerToken");
         }
 
         $postMarkAttachments = [];
