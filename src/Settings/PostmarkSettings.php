@@ -24,13 +24,7 @@ use Rhubarb\Crown\Settings;
  * Settings for the PostmarkEmailProvider
  *
  * @property string $ServerToken
- * @property string $DefaultSender
  */
 class PostmarkSettings extends Settings
 {
-    public static function getDefaultSender()
-    {
-        $settings = new self();
-        return $settings->DefaultSender;
-    }
 }
