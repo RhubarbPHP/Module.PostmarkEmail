@@ -23,8 +23,8 @@ use Rhubarb\Crown\Settings;
 /**
  * Settings for the PostmarkEmailProvider
  *
- * @property string $ServerToken
  */
 class PostmarkSettings extends Settings
 {
+    public $serverToken = "";
 }
