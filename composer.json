@@ -13,9 +13,6 @@
   "require": {
     "rhubarbphp/rhubarb": "^1.1.0",
     "wildbit/postmark-php": "1.*"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "3.*"
   }
 }
 
