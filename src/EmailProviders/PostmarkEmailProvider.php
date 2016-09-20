@@ -37,13 +37,14 @@ class PostmarkEmailProvider extends EmailProvider
      *
      * @param Sendable $email
      * @return mixed
+     * @throws EmailException
+     * @throws SettingMissingException
      */
     public function send(Sendable $email)
     {
         /**
          * @var Email $email
          */
-
         $settings = PostmarkSettings::singleton();
         $token = $settings->serverToken;
 
@@ -77,5 +78,6 @@ class PostmarkEmailProvider extends EmailProvider
             );
         } catch (PostmarkException $er) {
             throw new EmailException($er->getMessage(), $er);
-        }    }
+        }
+    }
 }
