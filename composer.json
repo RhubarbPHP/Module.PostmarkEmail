@@ -11,8 +11,8 @@
     }
   },
   "require": {
-    "rhubarbphp/rhubarb": "*",
-    "wildbit/postmark-php": "1.*"
+    "rhubarbphp/rhubarb": "^1.0.0",
+    "wildbit/postmark-php": "^2.2.0"
   },
   "require-dev": {
     "phpunit/phpunit": "3.*"

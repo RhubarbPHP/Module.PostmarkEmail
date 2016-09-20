@@ -21,17 +21,33 @@ namespace Rhubarb\PostmarkEmail\EmailProviders;
 use Postmark\Models\PostmarkAttachment;
 use Postmark\Models\PostmarkException;
 use Postmark\PostmarkClient;
-use Rhubarb\Crown\Email\Email;
-use Rhubarb\Crown\Email\EmailProvider;
 use Rhubarb\Crown\Exceptions\EmailException;
 use Rhubarb\Crown\Exceptions\SettingMissingException;
+use Rhubarb\Crown\Sendables\Email\Email;
+use Rhubarb\Crown\Sendables\Email\EmailProvider;
+use Rhubarb\Crown\Sendables\Sendable;
 use Rhubarb\PostmarkEmail\Settings\PostmarkSettings;
 
 class PostmarkEmailProvider extends EmailProvider
 {
-    public function sendEmail(Email $email)
+
+    /**
+     * Sends the sendable.
+     *
+     * Implemented by the concrete provider type.
+     *
+     * @param Sendable $sendable
+     * @return mixed
+     * @throws EmailException
+     * @throws SettingMissingException
+     */
+    public function send(Sendable $sendable)
     {
-        $settings = new PostmarkSettings();
+        /**
+         * @var Email $email
+         */
+        $email = $sendable;
+        $settings = PostmarkSettings::singleton();
         $token = $settings->ServerToken;
 
         if ($token === null) {
