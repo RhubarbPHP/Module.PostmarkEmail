@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.0.1
+
+Added:		Added support for reply-to
+
 ### 2.0.0
 
 Changed:	Moved to support Rhubarb 1 properly

@@ -70,7 +70,7 @@ class PostmarkEmailProvider extends EmailProvider
                 $email->getText(),
                 null,
                 false,
-                (string)$email->getSender(),
+                (string)$email->getReplyToRecipient(),
                 null,
                 null,
                 null,
