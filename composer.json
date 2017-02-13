@@ -12,7 +12,7 @@
   },
   "require": {
     "rhubarbphp/rhubarb": "*",
-    "wildbit/postmark-php": "1.*"
+    "wildbit/postmark-php": ">=1 <3"
   },
   "require-dev": {
     "phpunit/phpunit": "3.*"
