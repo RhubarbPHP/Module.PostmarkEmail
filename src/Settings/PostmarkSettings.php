@@ -27,4 +27,5 @@ use Rhubarb\Crown\Settings;
 class PostmarkSettings extends Settings
 {
     public $serverToken = "";
+    public $trackOpens = false;
 }

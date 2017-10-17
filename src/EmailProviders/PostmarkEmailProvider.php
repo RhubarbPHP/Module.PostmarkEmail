@@ -36,7 +36,7 @@ class PostmarkEmailProvider extends EmailProvider
      * Implemented by the concrete provider type.
      *
      * @param Sendable $email
-     * @return mixed
+     * @return string
      * @throws EmailException
      * @throws SettingMissingException
      */
@@ -62,20 +62,22 @@ class PostmarkEmailProvider extends EmailProvider
 
         try {
             $client = new PostmarkClient($token);
-            $client->sendEmail(
+            $response = $client->sendEmail(
                 (string)$email->getSender(),
                 $email->getRecipientList(),
                 $email->getSubject(),
                 $email->getHtml(),
                 $email->getText(),
                 null,
-                false,
+                $settings->trackOpens,
                 (string)$email->getReplyToRecipient(),
                 null,
                 null,
                 null,
                 $postMarkAttachments
             );
+
+            return $response->MessageID;
         } catch (PostmarkException $er) {
             throw new EmailException($er->getMessage(), $er);
         }
