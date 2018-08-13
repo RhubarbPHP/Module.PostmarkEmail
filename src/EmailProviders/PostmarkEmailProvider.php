@@ -48,20 +48,22 @@ class PostmarkEmailProvider extends EmailProvider
 
         try {
             $client = new PostmarkClient($token);
-            $client->sendEmail(
+            $response = $client->sendEmail(
                 (string)$email->getSender(),
                 $email->getRecipientList(),
                 $email->getSubject(),
                 $email->getHtml(),
                 $email->getText(),
                 null,
-                false,
+                $settings->trackOpens,
                 (string)$email->getSender(),
                 null,
                 null,
                 null,
                 $postMarkAttachments
             );
+
+            return $response->MessageID;
         } catch (PostmarkException $er) {
             throw new EmailException($er->getMessage(), $er);
         }
