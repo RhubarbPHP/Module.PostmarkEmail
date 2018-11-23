@@ -56,7 +56,7 @@ class PostmarkEmailProvider extends EmailProvider
                 $email->getText(),
                 null,
                 $settings->trackOpens,
-                (string)$email->getSender(),
+                (string)$email->getReplyTo(),
                 null,
                 null,
                 null,
