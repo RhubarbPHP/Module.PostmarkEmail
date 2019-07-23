@@ -23,6 +23,7 @@ use Postmark\Models\PostmarkException;
 use Postmark\PostmarkClient;
 use Rhubarb\Crown\Exceptions\EmailException;
 use Rhubarb\Crown\Exceptions\SettingMissingException;
+use Rhubarb\Crown\Sendables\Email\CarbonCopyEmail;
 use Rhubarb\Crown\Sendables\Email\Email;
 use Rhubarb\Crown\Sendables\Email\EmailProvider;
 use Rhubarb\Crown\Sendables\Sendable;
@@ -60,6 +61,13 @@ class PostmarkEmailProvider extends EmailProvider
             $postMarkAttachments[] = $postMarkAttachment;
         }
 
+        $ccRecipients = null;
+        $bccRecipients = null;
+        if ($email instanceof CarbonCopyEmail) {
+            $ccRecipients = $email->getCcRecipientList();
+            $bccRecipients = $email->getBccRecipientList();
+        }
+
         try {
             $client = new PostmarkClient($token);
             $response = $client->sendEmail(
@@ -71,9 +79,9 @@ class PostmarkEmailProvider extends EmailProvider
                 null,
                 $settings->trackOpens,
                 (string)$email->getReplyToRecipient(),
-                null,
-                null,
-                null,
+                $ccRecipients,
+                $bccRecipients,
+                $email->getMailHeaders(),
                 $postMarkAttachments
             );
 
